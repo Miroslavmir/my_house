@@ -16,11 +16,11 @@ Including another URLconf
 """
 
 from django.urls import path
+from main import views
 
 
 app_name = 'main'
 
-from main import views
 
 urlpatterns = [
 
