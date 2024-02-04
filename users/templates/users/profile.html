@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
-{#{% load carts_tags %}#}
+{% load carts_tags %}
 
 {% block content %}
 <div class="row">
@@ -80,17 +80,20 @@
                                     </div>
                                 </div>
                                 <!-- Корзина -->
+                                {% user_carts request as carts %}
                                 <div class="col-md-7">
                                     <div class=" bg-white p-4 mb-4 mx-2 rounded custom-shadow">
                                         <h3 class="text-center mb-4">Корзина</h3>
                                         <div class="container" id="cart-items-container">
                                             <!-- Разметка корзины -->
-
+                                                {% include "carts/includes/included_cart.html" %}
                                             <!-- Закончилась разметка корзины -->
                                         </div>
-                                        <a class="btn btn-dark" href="../orders/create_order.html">
-                                            Оформить заказ
+                                      {% if carts %}
+                                        <a class="btn btn-dark" href="orders/create_order.html">
+                                         Оформить заказ
                                         </a>
+                                      {% endif %}
                                     </div>
                                 </div>
                                 <!-- Оформленные заказы -->
@@ -119,7 +122,7 @@
                                                                 </thead>
                                                                 <tbody>
                                                                     <tr>
-                                                                        <td><a class="text-white" href="#">Комплект стол и три стула</a></td>
+                                                                        <td><a class="text-white" href="#">Выключатели</a></td>
                                                                         <td>1</td>
                                                                         <td>255.00 $</td>
                                                                         <td>255.00 $</td>
@@ -154,7 +157,7 @@
                                                                 </thead>
                                                                 <tbody>
                                                                     <tr>
-                                                                        <td><a class="text-white" href="#">Стул офисный</a></td>
+                                                                        <td><a class="text-white" href="#">Выключатели черные</a></td>
                                                                         <td>2</td>
                                                                         <td>30.00 $</td>
                                                                         <td>60.00 $</td>
