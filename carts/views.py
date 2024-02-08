@@ -48,6 +48,9 @@ def cart_add(request):
     return JsonResponse(response_data)
 
 
+
+    # return redirect(request.META['HTTP_REFERER'])
+
 def cart_change(request):
     cart_id = request.POST.get("cart_id")
     quantity = request.POST.get("quantity")

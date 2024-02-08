@@ -80,8 +80,8 @@ def profile(request):
 
     orders = Order.objects.filter(user=request.user).prefetch_related(
         Prefetch(
-            "orderitem_set",
-            queryset=OrderItem.objects.select_related("product"),
+            "orderitem _set",
+        queryset=OrderItem.objects.select_related("product"),
         )
     ).order_by("-id")
 

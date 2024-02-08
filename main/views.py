@@ -6,15 +6,11 @@ from django.shortcuts import render
 
 def index(request):
 
-
-
     context = {
         'title': 'Smart_house',
         'content': 'Добро пожаловать',
 
-
     }
-
 
     return render(request, 'main/index.html', context)
 
@@ -41,4 +37,45 @@ def about(request):
 
     return render(request, 'main/about.html', context)
 
+def index2(request):
+
+    context = {
+        'title': 'Smart_house',
+        'content': 'Наши контакты',
+
+    }
+
+    return render(request, 'main/index.html', context)
+
+def about2(request):
+
+    context = {
+        'title': 'Наши контакты ',
+        'content': 'Доставка и оплата',
+        'text_on_page': 'мы находимся по адресу'
+
+}
+
+    return render(request, 'main/about.html', context)
+
+def index3(request):
+
+    context = {
+        'title': 'Smart_house',
+        'content': 'Доставка и оплата',
+
+    }
+
+    return render(request, 'main/index.html', context)
+
+def about3(request):
+
+    context = {
+        'title': 'Доставка и оплата',
+        'content': 'Доставка и оплата',
+        'text_on_page': 'РЕСПУБЛИКА БЕЛАРУСЬ. ВИТЕБСКАЯ ОБЛАСТЬ. г.ВИТЕБСК '
+                        ' НАШ Телефон + ХХХ(ХХ) ХХХ-ХХ-ХХ'
+    }
+
+    return render(request, 'main/about.html', context)
 
