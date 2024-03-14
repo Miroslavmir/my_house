@@ -1,20 +1,21 @@
 from django.contrib import admin
+from goods import models
 
-from goods.models import Categories, Products
 
-@admin.register(Categories)
-class CategoriesAdmin(admin.ModelAdmin):
+@admin.register(models.Categories)
+class CategoriesModelAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ("name",)}
-    list_display = ["name",]
+    list_display = ("name",)
 
-@admin.register(Products)
-class ProductsAdmin(admin.ModelAdmin):
+
+@admin.register(models.Products)
+class ProductsModelAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ("name",)}
-    list_display = ["name", "quantity", "price", "discount"]
-    list_editable = ["discount",]
-    search_fields = ["name", "description"]
-    list_filter = ["discount", "quantity", "category"]
-    fields = [
+    list_display = ("name", "quantity", "price", "discount")
+    list_editable = ("discount",)
+    search_fields = ("name", "description")
+    list_filter = ("discount", "quantity", "category")
+    fields = (
         "name",
         "category",
         "slug",
@@ -22,4 +23,4 @@ class ProductsAdmin(admin.ModelAdmin):
         "image",
         ("price", "discount"),
         "quantity",
-    ]
+    )

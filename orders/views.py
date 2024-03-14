@@ -3,11 +3,27 @@ from django.contrib import messages
 from django.db import transaction
 from django.forms import ValidationError
 from django.shortcuts import redirect, render
-
 from carts.models import Cart
-
 from orders.forms import CreateOrderForm
 from orders.models import Order, OrderItem
+
+
+def create_order_items(order, cart_items):
+    for cart_item in cart_items:
+        product = cart_item.product
+        quantity = cart_item.quantity
+        if product.quantity < quantity:
+            raise ValidationError(
+                f'Недостаточное количество товара {product.name} на складе для выполнения заказа. В наличии - {product.quantity}, заказано - {quantity}')
+        OrderItem.objects.create(
+            order=order,
+            product=product,
+            name=product.name,
+            price=product.sell_price(),
+            quantity=quantity,
+        )
+        product.quantity -= quantity
+        product.save()
 
 
 @login_required
@@ -19,7 +35,6 @@ def create_order(request):
                 with transaction.atomic():
                     user = request.user
                     cart_items = Cart.objects.filter(user=user)
-
                     if cart_items.exists():
                         # Создать заказ
                         order = Order.objects.create(
@@ -30,30 +45,9 @@ def create_order(request):
                             payment_on_get=form.cleaned_data['payment_on_get'],
                         )
                         # Создать заказанные товары
-                        for cart_item in cart_items:
-                            product=cart_item.product
-                            name=cart_item.product.name
-                            price=cart_item.product.sell_price()
-                            quantity=cart_item.quantity
-
-
-                            if product.quantity < quantity:
-                                raise ValidationError(f'Недостаточное количество товара {name} на складе\
-                                                       В наличии - {product.quantity}')
-
-                            OrderItem.objects.create(
-                                order=order,
-                                product=product,
-                                name=name,
-                                price=price,
-                                quantity=quantity,
-                            )
-                            product.quantity -= quantity
-                            product.save()
-
+                        create_order_items(order, cart_items)
                         # Очистить корзину пользователя после создания заказа
                         cart_items.delete()
-
                         messages.success(request, 'Заказ оформлен!')
                         return redirect('user:profile')
             except ValidationError as e:
@@ -63,10 +57,8 @@ def create_order(request):
         initial = {
             'first_name': request.user.first_name,
             'last_name': request.user.last_name,
-            }
-
+        }
         form = CreateOrderForm(initial=initial)
-
     context = {
         'title': 'Home - Оформление заказа',
         'form': form,

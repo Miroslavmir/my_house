@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-*9#3*58zc8b$vq7+oqvey$7$(zq8*b+bgm8@wac(_erp-7!p#0
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -40,10 +40,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.postgres',
-
-
-
-    'debug_toolbar',
 
     'main',
     'goods',
@@ -61,8 +57,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-
-    "debug_toolbar.middleware.DebugToolbarMiddleware",
 ]
 
 ROOT_URLCONF = 'my_house.urls'
@@ -145,12 +139,6 @@ STATICFILES_DIRS = [
 MEDIA_URL = 'media/'
 
 MEDIA_ROOT = BASE_DIR / 'media'
-
-INTERNAL_IPS = [
-    # ...
-    "127.0.0.1"
-    # ...
-]
 
 
 # Default primary key field type
